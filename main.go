@@ -1,13 +1,13 @@
 package main
 
-import (
-	"DSA-GO/recursion"
-)
+import "DSA-Go/queue"
 
 func main() {
 	// stack.Run()
 
-	recursion.Run()
+	// recursion.Run()
+
+	queue.Run()
 
 	// linkedList.SingleLinkedList()
 }

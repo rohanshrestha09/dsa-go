@@ -1,37 +1,36 @@
-package stack
+package queue
 
 import "fmt"
 
 func Run() {
-
 	var (
 		arr    []int
 		choice int
 	)
 
-	push := func() {
+	enqueue := func() {
 		var data int
 
-		fmt.Print("Enter a data to push: ")
+		fmt.Print("Enter a data to enqueue: ")
 
 		_, err := fmt.Scanf("%d", &data)
 		if err != nil {
-			panic("Something went wrong")
+			panic(err)
 		}
 
 		arr = append(arr, data)
 	}
 
-	pop := func() {
+	dequeue := func() {
 
 		if len(arr) == 0 {
-			fmt.Println("Stack is empty")
+			fmt.Println("Queue is empty")
 			return
 		}
 
-		fmt.Println("The popped element is ", arr[len(arr)-1])
+		fmt.Println("The dequeued element is ", arr[0])
 
-		arr = arr[:len(arr)-1]
+		arr = arr[1:]
 	}
 
 	display := func() {
@@ -42,7 +41,7 @@ func Run() {
 
 	for true {
 
-		fmt.Print("\n1.Push\n2.Pop\n3.Display")
+		fmt.Print("\n1.Enqueue\n2.Dequeue\n3.Display")
 
 		fmt.Print("\nEnter your choice: ")
 
@@ -53,10 +52,10 @@ func Run() {
 
 		switch choice {
 		case 1:
-			push()
+			enqueue()
 
 		case 2:
-			pop()
+			dequeue()
 
 		case 3:
 			display()
