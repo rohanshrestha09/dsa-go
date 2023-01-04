@@ -1,6 +1,10 @@
 package linkedList
 
+import linkedList "DSA-Go/linkedList/linkedList"
+
 func Run() {
-	singleLinkedList()
+	linkedList.SingleLinkedList()
+
+	// doubleLinkedList()
 
 }

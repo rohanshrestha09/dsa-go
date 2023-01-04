@@ -9,11 +9,9 @@ func singleLinkedList() {
 		link *node
 	}
 
-	var (
-		root *node
-	)
+	var root *node
 
-	createNode := func() (node, bool) {
+	createNode := func() (*node, bool) {
 		var data int
 
 		fmt.Print("Enter a data to insert: ")
@@ -24,13 +22,13 @@ func singleLinkedList() {
 			panic(err)
 		}
 
-		newNode := node{data: data, link: nil}
+		newNode := &node{data: data, link: nil}
 
 		if root != nil {
 			return newNode, false
 		}
 
-		root = &newNode
+		root = newNode
 
 		return newNode, true
 	}
@@ -44,7 +42,7 @@ func singleLinkedList() {
 
 		newNode.link = root
 
-		root = &newNode
+		root = newNode
 	}
 
 	insertAtEnd := func() {
@@ -60,7 +58,7 @@ func singleLinkedList() {
 			temp = temp.link
 		}
 
-		temp.link = &newNode
+		temp.link = newNode
 	}
 
 	insertAtSpecific := func() {
@@ -69,7 +67,7 @@ func singleLinkedList() {
 			prev, temp *node
 		)
 
-		fmt.Print("Enter the position: ")
+		fmt.Print("Enter the position to insert after: ")
 
 		_, err := fmt.Scan(&pos)
 
@@ -77,7 +75,7 @@ func singleLinkedList() {
 			panic(err)
 		}
 
-		if root == nil && pos > 1 {
+		if root == nil {
 			fmt.Println("List is empty")
 			return
 		}
@@ -103,7 +101,7 @@ func singleLinkedList() {
 
 		newNode.link = temp
 
-		prev.link = &newNode
+		prev.link = newNode
 	}
 
 	display := func() {
@@ -149,7 +147,7 @@ func singleLinkedList() {
 			prev, temp *node
 		)
 
-		fmt.Print("Enter the position: ")
+		fmt.Print("Enter the position to append after: ")
 
 		_, err := fmt.Scan(&pos)
 
@@ -173,11 +171,50 @@ func singleLinkedList() {
 		prev.link = temp.link
 	}
 
+	search := func() {
+
+		var data int
+
+		fmt.Print("Enter data to search: ")
+
+		_, err := fmt.Scan(&data)
+
+		if err != nil {
+			panic(err)
+		}
+
+		temp := root
+
+		for temp != nil {
+			if temp.data == data {
+				fmt.Println("Data found")
+				return
+			}
+
+			temp = temp.link
+		}
+
+		fmt.Println("Data not found")
+	}
+
+	length := func() {
+		var count int
+
+		temp := root
+
+		for temp != nil {
+			count++
+			temp = temp.link
+		}
+
+		fmt.Println("Length of the list is", count)
+	}
+
 	var choice int
 
 	for true {
 
-		fmt.Print("\n1.Insert at beginning\n2.Insert at specific position\n3.Insert at end\n4.Display\n5.Delete at beginning\n6.Delete at specific position\n7.Delete at end")
+		fmt.Print("\n1.Insert at beginning\n2.Insert at specific position\n3.Insert at end\n4.Display\n5.Delete at beginning\n6.Delete at specific position\n7.Delete at end\n8.Search\n9.Length of the list")
 
 		fmt.Print("\nChoose an operation: ")
 
@@ -202,6 +239,10 @@ func singleLinkedList() {
 			deleteAtSpecific()
 		case 7:
 			deleteAtEnd()
+		case 8:
+			search()
+		case 9:
+			length()
 		}
 	}
 }
