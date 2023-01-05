@@ -1,6 +1,6 @@
 //go:build exclude
 
-package linkedListGoStyle
+package linkedList
 
 import "fmt"
 

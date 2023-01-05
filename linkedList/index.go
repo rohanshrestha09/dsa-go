@@ -1,8 +1,7 @@
 package linkedList
 
 func Run() {
-	// singleLinkedList()
+	// singlyLinkedList()
 
 	doubleLinkedList()
-
 }

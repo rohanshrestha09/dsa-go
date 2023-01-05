@@ -2,283 +2,220 @@ package linkedList
 
 import "fmt"
 
+type Node struct {
+	data int
+	prev *Node
+	next *Node
+}
+
+type LinkedList struct {
+	root   *Node
+	length int
+}
+
+func (list *LinkedList) InsertAtStart(newNode *Node) {
+	if list.root == nil {
+		list.root = newNode
+		list.length++
+		return
+	}
+
+	list.root.prev = newNode
+
+	newNode.next = list.root
+
+	list.root = newNode
+
+	list.length++
+}
+
+func (list *LinkedList) InsertAtEnd(newNode *Node) {
+	if list.root == nil {
+		list.root = newNode
+		list.length++
+		return
+	}
+
+	temp := list.root
+
+	for temp.next != nil {
+		temp = temp.next
+	}
+
+	newNode.prev = temp
+
+	temp.next = newNode
+
+	list.length++
+}
+
+func (list *LinkedList) InsertAtSpecific(newNode *Node, pos int) {
+	if pos == 1 {
+		list.InsertAtStart(newNode)
+		return
+	}
+
+	if pos == list.length+1 {
+		list.InsertAtEnd(newNode)
+		return
+	}
+
+	if pos > list.length+1 {
+		fmt.Println("Position exceeds the list length")
+		return
+	}
+
+	temp := list.root
+
+	for i := 1; i < pos; i++ {
+		temp = temp.next
+	}
+
+	temp.prev.next = newNode
+
+	newNode.prev = temp.prev
+
+	newNode.next = temp
+
+	temp.prev = newNode
+
+	list.length++
+}
+
+func (list *LinkedList) DeleteAtStart() {
+	if list.root == nil {
+		fmt.Println("List is empty")
+		return
+	}
+
+	temp := list.root
+
+	list.root = list.root.next
+
+	list.root.prev = nil
+
+	temp.next = nil
+
+	list.length--
+}
+
+func (list *LinkedList) DeleteAtEnd() {
+	if list.root == nil {
+		fmt.Println("List is empty")
+		return
+	}
+
+	if list.root.next == nil {
+		list.root = nil
+		list.length--
+		return
+	}
+
+	temp := list.root
+
+	for temp.next != nil {
+		temp = temp.next
+	}
+
+	temp.prev.next = nil
+
+	temp.prev = nil
+
+	list.length--
+}
+
+func (list *LinkedList) DeleteAtSpecific(pos int) {
+	if list.root == nil {
+		fmt.Println("List is empty")
+		return
+	}
+
+	if pos == 1 {
+		list.DeleteAtStart()
+		return
+	}
+
+	if list.length == pos {
+		list.DeleteAtEnd()
+		return
+	}
+
+	if pos > list.length {
+		fmt.Println("Position exceeds the list length")
+		return
+	}
+
+	temp := list.root
+
+	for i := 1; i < pos; i++ {
+		temp = temp.next
+	}
+
+	temp.prev.next = temp.next
+
+	temp.next.prev = temp.prev
+
+	temp.next = nil
+
+	temp.prev = nil
+
+	list.length--
+}
+
+func (list *LinkedList) Display() {
+	temp := list.root
+
+	for temp != nil {
+		fmt.Printf("%d\t", temp.data)
+
+		temp = temp.next
+	}
+}
+
+func (list *LinkedList) Search(data int) {
+	if list.root == nil {
+		fmt.Println("List is empty")
+		return
+	}
+
+	temp := list.root
+
+	for temp != nil {
+		if temp.data == data {
+			fmt.Println("Data found")
+			return
+		}
+
+		temp = temp.next
+	}
+
+	fmt.Println("Data not found")
+
+}
+
 func doubleLinkedList() {
-	type node struct {
-		data int
-		prev *node
-		next *node
-	}
 
-	var root *node
+	linkedList := &LinkedList{}
 
-	length := func() int {
-		var count int
+	linkedList.InsertAtStart(&Node{data: 6}) // 6
 
-		temp := root
+	linkedList.InsertAtStart(&Node{data: 10}) // 10 6
 
-		for temp != nil {
-			count++
-			temp = temp.next
-		}
+	linkedList.InsertAtEnd(&Node{data: 14}) // 10 6 14
 
-		return count
-	}
+	linkedList.InsertAtSpecific(&Node{data: 20}, 2) // 10 20 6 14
 
-	createNode := func() (*node, bool) {
-		var data int
+	linkedList.InsertAtEnd(&Node{data: 50}) // 10 20 6 14 50
 
-		fmt.Print("Enter a data to insert: ")
+	linkedList.DeleteAtEnd() // 10 20 6 14
 
-		_, err := fmt.Scan(&data)
+	linkedList.DeleteAtStart() // 20 6 14
 
-		if err != nil {
-			panic(err)
-		}
+	linkedList.DeleteAtSpecific(2) // 20 14
 
-		newNode := &node{data: data, prev: nil, next: nil}
+	linkedList.Display()
 
-		if root != nil {
-			return newNode, false
-		}
+	linkedList.Search(14) // Data found
 
-		root = newNode
-
-		return newNode, true
-	}
-
-	insertAtStart := func() {
-		newNode, isInitialAppend := createNode()
-
-		if isInitialAppend {
-			return
-		}
-
-		root.prev = newNode
-
-		newNode.next = root
-
-		root = newNode
-	}
-
-	insertAtEnd := func() {
-		newNode, isInitialAppend := createNode()
-
-		if isInitialAppend {
-			return
-		}
-
-		temp := root
-
-		for temp.next != nil {
-			temp = temp.next
-		}
-
-		newNode.prev = temp
-
-		newNode.prev.next = newNode
-	}
-
-	insertAtSpecific := func() {
-		var pos int
-
-		fmt.Print("Enter the position to append: ")
-
-		_, err := fmt.Scan(&pos)
-
-		if err != nil {
-			panic(err)
-		}
-
-		if pos == 1 {
-			insertAtStart()
-			return
-		}
-
-		if pos == length()+1 {
-			insertAtEnd()
-			return
-		}
-
-		if pos > length()+1 {
-			fmt.Println("Position exceeds the list length")
-			return
-		}
-
-		newNode, isInitialAppend := createNode()
-
-		if isInitialAppend {
-			return
-		}
-
-		temp := root
-
-		for i := 1; i < pos; i++ {
-			temp = temp.next
-		}
-
-		temp.prev.next = newNode
-
-		newNode.prev = temp.prev
-
-		newNode.next = temp
-
-		temp.prev = newNode
-
-	}
-
-	deleteAtStart := func() {
-		if root == nil {
-			fmt.Println("List is empty")
-			return
-		}
-
-		temp := root
-
-		root = root.next
-
-		root.prev = nil
-
-		temp.next = nil
-
-		temp.prev = nil
-	}
-
-	deleteAtEnd := func() {
-		if root == nil {
-			fmt.Println("List is empty")
-			return
-		}
-
-		if root.next == nil {
-			root = nil
-			return
-		}
-
-		temp := root
-
-		for temp.next != nil {
-			temp = temp.next
-		}
-
-		temp.prev.next = nil
-
-		temp.prev = nil
-	}
-
-	deleteAtSpecific := func() {
-		var pos int
-
-		if root == nil {
-			fmt.Println("List is empty")
-			return
-		}
-
-		fmt.Print("Enter the position to delete: ")
-
-		_, err := fmt.Scan(&pos)
-
-		if err != nil {
-			panic(err)
-		}
-
-		if pos == 1 {
-			deleteAtStart()
-			return
-		}
-
-		if length() == pos {
-			deleteAtEnd()
-			return
-		}
-
-		if pos > length() {
-			fmt.Println("Position exceeds the list length")
-			return
-		}
-
-		temp := root
-
-		for i := 1; i < pos; i++ {
-			temp = temp.next
-		}
-
-		temp.prev.next = temp.next
-
-		temp.next.prev = temp.prev
-
-		temp.next = nil
-
-		temp.prev = nil
-	}
-
-	display := func() {
-		temp := root
-
-		for temp != nil {
-			fmt.Printf("%d\t", temp.data)
-
-			temp = temp.next
-		}
-	}
-
-	search := func() {
-
-		var data int
-
-		fmt.Print("Enter data to search: ")
-
-		_, err := fmt.Scan(&data)
-
-		if err != nil {
-			panic(err)
-		}
-
-		temp := root
-
-		for temp != nil {
-			if temp.data == data {
-				fmt.Println("Data found")
-				return
-			}
-
-			temp = temp.next
-		}
-
-		fmt.Println("Data not found")
-	}
-
-	for true {
-		var choice int
-
-		fmt.Print("\n1.Insert at start\n2.Insert at specific\n3.Insert at end\n4.Display\n5.Delete at start\n6.Delete at specific\n7.Delete at end\n8.Search\n9.Length of the list")
-
-		fmt.Print("\nEnter your choice: ")
-
-		_, err := fmt.Scan(&choice)
-
-		if err != nil {
-			panic(err)
-		}
-
-		switch choice {
-		case 1:
-			insertAtStart()
-		case 2:
-			insertAtSpecific()
-		case 3:
-			insertAtEnd()
-		case 4:
-			display()
-		case 5:
-			deleteAtStart()
-		case 6:
-			deleteAtSpecific()
-		case 7:
-			deleteAtEnd()
-		case 8:
-			search()
-		case 9:
-			fmt.Println("Length of the list is", length())
-		}
-	}
+	fmt.Println("The length of the list is", linkedList.length) // 2
 }
