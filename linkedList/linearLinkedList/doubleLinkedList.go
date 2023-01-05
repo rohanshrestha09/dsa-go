@@ -1,4 +1,4 @@
-package linkedList
+package linearLinkedList
 
 import "fmt"
 

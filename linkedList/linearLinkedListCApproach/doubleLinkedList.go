@@ -1,4 +1,4 @@
-package linkedListCApproach
+package linearLinkedListCApproach
 
 import "fmt"
 

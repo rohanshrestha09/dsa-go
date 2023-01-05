@@ -1,4 +1,4 @@
-package linkedList
+package linearLinkedList
 
 func Run() {
 	// singlyLinkedList()

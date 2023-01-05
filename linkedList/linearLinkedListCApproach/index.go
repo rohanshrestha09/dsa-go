@@ -1,4 +1,4 @@
-package linkedListCApproach
+package linearLinkedListCApproach
 
 func Run() {
 	// singleLinkedList()
