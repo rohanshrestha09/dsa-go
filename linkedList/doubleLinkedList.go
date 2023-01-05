@@ -11,6 +11,19 @@ func doubleLinkedList() {
 
 	var root *node
 
+	length := func() int {
+		var count int
+
+		temp := root
+
+		for temp != nil {
+			count++
+			temp = temp.next
+		}
+
+		return count
+	}
+
 	createNode := func() (*node, bool) {
 		var data int
 
@@ -47,49 +60,6 @@ func doubleLinkedList() {
 		root = newNode
 	}
 
-	insertAtSpecific := func() {
-		var pos int
-
-		fmt.Print("Enter the position to append after: ")
-
-		_, err := fmt.Scan(&pos)
-
-		if err != nil {
-			panic(err)
-		}
-
-		if root == nil {
-			fmt.Println("List is empty")
-			return
-		}
-
-		newNode, isInitialAppend := createNode()
-
-		if isInitialAppend {
-			return
-		}
-
-		temp := root
-
-		for i := 0; i < pos; i++ {
-
-			if temp.next == nil {
-				fmt.Println("Position exceeds the list length")
-				return
-			}
-
-			temp = temp.next
-		}
-
-		temp.prev.next = newNode
-
-		newNode.prev = temp.prev
-
-		newNode.next = temp
-
-		temp.prev = newNode
-	}
-
 	insertAtEnd := func() {
 		newNode, isInitialAppend := createNode()
 
@@ -108,6 +78,54 @@ func doubleLinkedList() {
 		newNode.prev.next = newNode
 	}
 
+	insertAtSpecific := func() {
+		var pos int
+
+		fmt.Print("Enter the position to append: ")
+
+		_, err := fmt.Scan(&pos)
+
+		if err != nil {
+			panic(err)
+		}
+
+		if pos == 1 {
+			insertAtStart()
+			return
+		}
+
+		if pos == length()+1 {
+			insertAtEnd()
+			return
+		}
+
+		if pos > length()+1 {
+			fmt.Println("Position exceeds the list length")
+			return
+		}
+
+		newNode, isInitialAppend := createNode()
+
+		if isInitialAppend {
+			return
+		}
+
+		temp := root
+
+		for i := 1; i < pos; i++ {
+			temp = temp.next
+		}
+
+		temp.prev.next = newNode
+
+		newNode.prev = temp.prev
+
+		newNode.next = temp
+
+		temp.prev = newNode
+
+	}
+
 	deleteAtStart := func() {
 		if root == nil {
 			fmt.Println("List is empty")
@@ -123,51 +141,6 @@ func doubleLinkedList() {
 		temp.next = nil
 
 		temp.prev = nil
-	}
-
-	deleteAtSpecific := func() {
-		if root == nil {
-			fmt.Println("List is empty")
-			return
-		}
-
-		var pos int
-
-		fmt.Print("Enter the position to delete after: ")
-
-		_, err := fmt.Scan(&pos)
-
-		if err != nil {
-			panic(err)
-		}
-
-		temp := root
-
-		for i := 0; i < pos; i++ {
-			if temp.next == nil {
-				fmt.Println("Position exceeds the list length")
-				return
-			}
-
-			temp = temp.next
-		}
-
-		if root.next == nil {
-			root = nil
-		}
-
-		if temp.prev != nil {
-			temp.prev.next = temp.next
-		}
-
-		if temp.next != nil {
-			temp.next.prev = temp.prev
-		}
-
-		temp.next = nil
-
-		temp.prev = nil
-
 	}
 
 	deleteAtEnd := func() {
@@ -188,6 +161,52 @@ func doubleLinkedList() {
 		}
 
 		temp.prev.next = nil
+
+		temp.prev = nil
+	}
+
+	deleteAtSpecific := func() {
+		var pos int
+
+		if root == nil {
+			fmt.Println("List is empty")
+			return
+		}
+
+		fmt.Print("Enter the position to delete: ")
+
+		_, err := fmt.Scan(&pos)
+
+		if err != nil {
+			panic(err)
+		}
+
+		if pos == 1 {
+			deleteAtStart()
+			return
+		}
+
+		if length() == pos {
+			deleteAtEnd()
+			return
+		}
+
+		if pos > length() {
+			fmt.Println("Position exceeds the list length")
+			return
+		}
+
+		temp := root
+
+		for i := 1; i < pos; i++ {
+			temp = temp.next
+		}
+
+		temp.prev.next = temp.next
+
+		temp.next.prev = temp.prev
+
+		temp.next = nil
 
 		temp.prev = nil
 	}
@@ -228,19 +247,6 @@ func doubleLinkedList() {
 		fmt.Println("Data not found")
 	}
 
-	length := func() {
-		var count int
-
-		temp := root
-
-		for temp != nil {
-			count++
-			temp = temp.next
-		}
-
-		fmt.Println("Length of the list is", count)
-	}
-
 	for true {
 		var choice int
 
@@ -272,7 +278,7 @@ func doubleLinkedList() {
 		case 8:
 			search()
 		case 9:
-			length()
+			fmt.Println("Length of the list is", length())
 		}
 	}
 }

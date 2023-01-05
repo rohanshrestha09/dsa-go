@@ -11,6 +11,19 @@ func singleLinkedList() {
 
 	var root *node
 
+	length := func() int {
+		var count int
+
+		temp := root
+
+		for temp != nil {
+			count++
+			temp = temp.link
+		}
+
+		return count
+	}
+
 	createNode := func() (*node, bool) {
 		var data int
 
@@ -67,7 +80,7 @@ func singleLinkedList() {
 			prev, temp *node
 		)
 
-		fmt.Print("Enter the position to insert after: ")
+		fmt.Print("Enter the position to insert: ")
 
 		_, err := fmt.Scan(&pos)
 
@@ -75,8 +88,19 @@ func singleLinkedList() {
 			panic(err)
 		}
 
-		if root == nil {
-			fmt.Println("List is empty")
+		if pos == 1 {
+			insertAtStart()
+			return
+		}
+
+		if pos == length()+1 {
+			insertAtEnd()
+			return
+		}
+
+		if pos > length()+1 {
+			fmt.Println("Position exceeds the list length")
+
 			return
 		}
 
@@ -88,13 +112,8 @@ func singleLinkedList() {
 
 		temp = root
 
-		for i := 0; i < pos; i++ {
+		for i := 1; i < pos; i++ {
 			prev = temp
-
-			if temp.link == nil {
-				fmt.Println("Position exceeds the list length")
-				return
-			}
 
 			temp = temp.link
 		}
@@ -147,7 +166,12 @@ func singleLinkedList() {
 			prev, temp *node
 		)
 
-		fmt.Print("Enter the position to append after: ")
+		if root == nil {
+			fmt.Println("List is empty")
+			return
+		}
+
+		fmt.Print("Enter the position to delete: ")
 
 		_, err := fmt.Scan(&pos)
 
@@ -155,20 +179,31 @@ func singleLinkedList() {
 			panic(err)
 		}
 
+		if pos == 1 {
+			deleteAtStart()
+			return
+		}
+
+		if length() == pos {
+			deleteAtEnd()
+			return
+		}
+
+		if pos > length() {
+			fmt.Println("Position exceeds the list length")
+			return
+		}
+
 		temp = root
 
-		for i := 0; i < pos; i++ {
+		for i := 1; i < pos; i++ {
 			prev = temp
-
-			if temp.link == nil {
-				fmt.Println("Position exceeds the list length")
-				return
-			}
-
 			temp = temp.link
 		}
 
 		prev.link = temp.link
+
+		temp.link = nil
 	}
 
 	search := func() {
@@ -195,19 +230,6 @@ func singleLinkedList() {
 		}
 
 		fmt.Println("Data not found")
-	}
-
-	length := func() {
-		var count int
-
-		temp := root
-
-		for temp != nil {
-			count++
-			temp = temp.link
-		}
-
-		fmt.Println("Length of the list is", count)
 	}
 
 	var choice int
@@ -242,7 +264,7 @@ func singleLinkedList() {
 		case 8:
 			search()
 		case 9:
-			length()
+			fmt.Println("Length of the list is", length())
 		}
 	}
 }
