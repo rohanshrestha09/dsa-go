@@ -1,8 +1,6 @@
 package main
 
-import (
-	"DSA-Go/linkedList"
-)
+import "DSA-Go/linkedListGoStyle"
 
 func main() {
 	// stack.Run()
@@ -11,5 +9,7 @@ func main() {
 
 	// queue.Run()
 
-	linkedList.Run()
+	// linkedList.Run()
+
+	linkedListGoStyle.Run()
 }

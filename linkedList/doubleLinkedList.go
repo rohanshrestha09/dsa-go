@@ -116,11 +116,13 @@ func doubleLinkedList() {
 
 		temp := root
 
-		root.prev = nil
-
 		root = root.next
 
+		root.prev = nil
+
 		temp.next = nil
+
+		temp.prev = nil
 	}
 
 	deleteAtSpecific := func() {
