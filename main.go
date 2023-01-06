@@ -1,5 +1,7 @@
 package main
 
+import "DSA-Go/linkedList/circularLinkedList"
+
 func main() {
 	// stack.Run()
 
@@ -11,4 +13,5 @@ func main() {
 
 	// linkedListGoStyle.Run()
 
+	circularLinkedList.Run()
 }

@@ -83,7 +83,11 @@ func (list *LinkedList) DeleteAtStart() {
 		return
 	}
 
+	temp := list.root
+
 	list.root = list.root.link
+
+	temp.link = nil
 
 	list.length--
 }
