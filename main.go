@@ -1,17 +1,17 @@
 package main
 
-import "DSA-Go/linkedList/circularLinkedList"
+import "DSA-Go/queue"
 
 func main() {
 	// stack.Run()
 
 	// recursion.Run()
 
-	// queue.Run()
+	queue.Run()
 
 	// linkedList.Run()
 
 	// linkedListGoStyle.Run()
 
-	circularLinkedList.Run()
+	// circularLinkedList.Run()
 }
