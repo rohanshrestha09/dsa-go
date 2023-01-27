@@ -1,6 +1,8 @@
 package main
 
-import "DSA-Go/tree1"
+import (
+	"DSA-Go/graph"
+)
 
 func main() {
 	// stack.Run()
@@ -15,5 +17,7 @@ func main() {
 
 	// circularLinkedList.Run()
 
-	tree1.Run()
+	// tree1.Run()
+
+	graph.Run()
 }
