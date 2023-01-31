@@ -2,64 +2,53 @@ package stack
 
 import "fmt"
 
+type Stack struct {
+	data []interface{}
+	size int
+}
+
+func (s *Stack) Push(data interface{}) {
+	s.data = append(s.data, data)
+
+	s.size++
+}
+
+func (s *Stack) Pop() interface{} {
+
+	if s.size == 0 {
+		fmt.Println("Stack is empty")
+		return nil
+	}
+
+	item := s.data[s.size-1]
+
+	s.data = s.data[:s.size-1]
+
+	s.size--
+
+	return item
+}
+
+func (s *Stack) Display() {
+	for _, val := range s.data {
+		fmt.Printf("%v\t", val)
+	}
+}
+
 func Run() {
 
-	var (
-		arr    []int
-		choice int
-	)
+	// s := new(Stack)
 
-	push := func() {
-		var data int
+	// s.Push(10)
 
-		fmt.Print("Enter a data to push: ")
+	// s.Push(200)
 
-		_, err := fmt.Scanf("%d", &data)
-		if err != nil {
-			panic("Something went wrong")
-		}
+	// s.Push("Nice")
 
-		arr = append(arr, data)
-	}
+	// s.Pop()
 
-	pop := func() {
+	// s.Display()
 
-		if len(arr) == 0 {
-			fmt.Println("Stack is empty")
-			return
-		}
+	fmt.Printf("\n%s", convertToPostfix("(a*(b-c/(d*e-f)+g))^h"))
 
-		fmt.Println("The popped element is ", arr[len(arr)-1])
-
-		arr = arr[:len(arr)-1]
-	}
-
-	display := func() {
-		for _, val := range arr {
-			fmt.Print(val, " ")
-		}
-	}
-
-	for true {
-
-		fmt.Print("\n1.Push\n2.Pop\n3.Display")
-
-		fmt.Print("\nEnter your choice: ")
-
-		_, err := fmt.Scan(&choice)
-		if err != nil {
-			return
-		}
-
-		switch choice {
-		case 1:
-			push()
-
-		case 2:
-			pop()
-
-		case 3:
-			display()
-		}
-	}
 }

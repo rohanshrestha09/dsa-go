@@ -4,7 +4,7 @@ package graph
 
 import "fmt"
 
-// Graph Space Complexity: O(n) Due to the use of 2D matrix
+// Graph Space Complexity: O(n*n) Due to the use of 2D matrix
 
 type Graph struct {
 	adjMatrix [][]bool
