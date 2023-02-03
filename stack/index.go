@@ -5,10 +5,13 @@ import "fmt"
 type Stack struct {
 	data []interface{}
 	size int
+	tos  interface{}
 }
 
 func (s *Stack) Push(data interface{}) {
 	s.data = append(s.data, data)
+
+	s.tos = data
 
 	s.size++
 }
@@ -25,6 +28,10 @@ func (s *Stack) Pop() interface{} {
 	s.data = s.data[:s.size-1]
 
 	s.size--
+
+	if s.size != 0 {
+		s.tos = s.data[len(s.data)-1]
+	}
 
 	return item
 }
@@ -49,6 +56,6 @@ func Run() {
 
 	// s.Display()
 
-	fmt.Printf("\n%s", convertToPostfix("(a*(b-c/(d*e-f)+g))^h"))
+	fmt.Printf("\n%s", infixToPostfix("A+(B*C-(D/E$D)*G)*H"))
 
 }

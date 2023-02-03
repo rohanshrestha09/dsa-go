@@ -4,5 +4,7 @@ func Run() {
 
 	// linearQueue()
 
-	circularQueue()
+	// circularQueue()
+
+	listQueue()
 }

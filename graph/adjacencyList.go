@@ -3,7 +3,7 @@ package graph
 import "fmt"
 
 type Node struct {
-	vertex byte
+	vertex int
 	link   *Node
 }
 
@@ -18,7 +18,7 @@ func (graph *Graph) Init(vertices int) {
 	graph.adjList = make([]*Node, vertices)
 }
 
-func (graph *Graph) AddEdge(s, d byte) {
+func (graph *Graph) AddEdge(s, d int) {
 	newNode := &Node{d, nil}
 
 	newNode.link = graph.adjList[s]
@@ -30,7 +30,7 @@ func (graph *Graph) AddEdge(s, d byte) {
 	}
 }
 
-func (graph *Graph) RemoveEdge(s, d byte) {
+func (graph *Graph) RemoveEdge(s, d int) {
 	if graph.adjList[s] == nil {
 		return
 	}

@@ -3,5 +3,7 @@ package graph
 func Run() {
 	//	adjacencyMatrix()
 
-	adjacencyList()
+	// adjacencyList()
+
+	dfs()
 }

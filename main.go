@@ -1,11 +1,12 @@
 package main
 
 import (
-	"DSA-Go/stack"
+	"DSA-Go/graph"
+	// "DSA-Go/stack"
 )
 
 func main() {
-	stack.Run()
+	// stack.Run()
 
 	// recursion.Run()
 
@@ -19,7 +20,7 @@ func main() {
 
 	// tree1.Run()
 
-	// graph.Run()
+	graph.Run()
 
 	// hashtable.Run()
 

@@ -21,7 +21,7 @@ func checkOPPrecedence(operator rune) int {
 	return 0
 }
 
-func convertToPostfix(infix string) string {
+func infixToPostfix(infix string) string {
 
 	s := new(Stack)
 
@@ -52,7 +52,7 @@ func convertToPostfix(infix string) string {
 		precedenceOperation:
 			TOS := (func() int {
 				if s.size != 0 {
-					return checkOPPrecedence(s.data[s.size-1].(rune))
+					return checkOPPrecedence(s.tos.(rune))
 				}
 				return 0
 			})()
