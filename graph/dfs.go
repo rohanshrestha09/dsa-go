@@ -2,17 +2,17 @@ package graph
 
 import "fmt"
 
-func (g *Graph) DFS(initialVertex int, visited []*Node) {
+func (g *Graph) DFS(initialVertex int, visited []bool) {
 
-	if visited[initialVertex] != nil {
+	if visited[initialVertex] {
 		return
 	}
 
 	fmt.Print(initialVertex)
 
-	temp := g.adjList[initialVertex]
+	visited[initialVertex] = true
 
-	visited[initialVertex] = temp
+	temp := g.adjList[initialVertex]
 
 	for temp != nil {
 		g.DFS(temp.vertex, visited)
@@ -35,7 +35,7 @@ func dfs() {
 
 	g.AddEdge(2, 4)
 
-	visited := make([]*Node, 5)
+	visited := make([]bool, g.vertices)
 
 	g.DFS(0, visited)
 }

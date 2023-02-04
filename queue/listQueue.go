@@ -8,8 +8,9 @@ type Node struct {
 }
 
 type ListQueue struct {
-	front *Node
-	rear  *Node
+	front  *Node
+	rear   *Node
+	Length int
 }
 
 func (q *ListQueue) Enqueue(data int) {
@@ -17,19 +18,25 @@ func (q *ListQueue) Enqueue(data int) {
 
 	if q.front == nil && q.rear == nil {
 		q.front = newNode
+
 		q.rear = newNode
+
+		q.Length++
+
 		return
 	}
 
 	q.rear.next = newNode
 
 	q.rear = newNode
+
+	q.Length++
 }
 
-func (q *ListQueue) Dequeue() {
+func (q *ListQueue) Dequeue() int {
 	if q.front == nil && q.rear == nil {
 		fmt.Println("Queue is empty")
-		return
+		return -1
 	}
 
 	temp := q.front
@@ -41,6 +48,10 @@ func (q *ListQueue) Dequeue() {
 	if q.front == nil {
 		q.rear = nil
 	}
+
+	q.Length--
+
+	return temp.data
 }
 
 func (q *ListQueue) Display() {

@@ -5,5 +5,7 @@ func Run() {
 
 	// adjacencyList()
 
-	dfs()
+	// dfs()
+
+	bfs()
 }

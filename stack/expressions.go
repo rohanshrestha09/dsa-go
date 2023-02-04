@@ -51,13 +51,13 @@ func infixToPostfix(infix string) string {
 		default:
 		precedenceOperation:
 			TOS := (func() int {
-				if s.size != 0 {
-					return checkOPPrecedence(s.tos.(rune))
+				if s.Length != 0 {
+					return checkOPPrecedence(s.TOS.(rune))
 				}
 				return 0
 			})()
 
-			if s.size == 0 || checkOPPrecedence(value) > TOS {
+			if s.Length == 0 || checkOPPrecedence(value) > TOS {
 				s.Push(value)
 			} else {
 
@@ -70,7 +70,7 @@ func infixToPostfix(infix string) string {
 		}
 	}
 
-	for s.size != 0 {
+	for s.Length != 0 {
 		postfix = postfix + string(s.Pop().(rune))
 	}
 

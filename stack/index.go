@@ -3,34 +3,34 @@ package stack
 import "fmt"
 
 type Stack struct {
-	data []interface{}
-	size int
-	tos  interface{}
+	data   []interface{}
+	Length int
+	TOS    interface{}
 }
 
 func (s *Stack) Push(data interface{}) {
 	s.data = append(s.data, data)
 
-	s.tos = data
+	s.TOS = data
 
-	s.size++
+	s.Length++
 }
 
 func (s *Stack) Pop() interface{} {
 
-	if s.size == 0 {
+	if s.Length == 0 {
 		fmt.Println("Stack is empty")
 		return nil
 	}
 
-	item := s.data[s.size-1]
+	item := s.data[s.Length-1]
 
-	s.data = s.data[:s.size-1]
+	s.data = s.data[:s.Length-1]
 
-	s.size--
+	s.Length--
 
-	if s.size != 0 {
-		s.tos = s.data[len(s.data)-1]
+	if s.Length != 0 {
+		s.TOS = s.data[len(s.data)-1]
 	}
 
 	return item
@@ -56,6 +56,6 @@ func Run() {
 
 	// s.Display()
 
-	fmt.Printf("\n%s", infixToPostfix("A+(B*C-(D/E$D)*G)*H"))
+	fmt.Printf("\n%s", infixToPostfix("A+(B*C-(D/E$F)*G)*H"))
 
 }
