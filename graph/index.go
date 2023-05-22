@@ -1,11 +1,26 @@
 package graph
 
+import "fmt"
+
 func Run() {
-	//	adjacencyMatrix()
 
-	// adjacencyList()
+	g := new(Graph)
 
-	// dfs()
+	g.Init(5)
 
-	bfs()
+	g.AddEdge(0, 3)
+
+	g.AddEdge(0, 2)
+
+	g.AddEdge(0, 1)
+
+	g.AddEdge(2, 4)
+
+	g.BFS(0)
+
+	fmt.Println()
+
+	visited := make([]bool, g.vertices)
+
+	g.DFS(0, visited)
 }

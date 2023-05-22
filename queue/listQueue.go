@@ -2,19 +2,19 @@ package queue
 
 import "fmt"
 
-type Node struct {
-	data int
-	next *Node
+type Node[T any] struct {
+	data T
+	next *Node[T]
 }
 
-type ListQueue struct {
-	front  *Node
-	rear   *Node
+type ListQueue[T any] struct {
+	front  *Node[T]
+	rear   *Node[T]
 	Length int
 }
 
-func (q *ListQueue) Enqueue(data int) {
-	newNode := &Node{data, nil}
+func (q *ListQueue[T]) Enqueue(data T) {
+	newNode := &Node[T]{data, nil}
 
 	if q.front == nil && q.rear == nil {
 		q.front = newNode
@@ -33,10 +33,9 @@ func (q *ListQueue) Enqueue(data int) {
 	q.Length++
 }
 
-func (q *ListQueue) Dequeue() int {
+func (q *ListQueue[T]) Dequeue() T {
 	if q.front == nil && q.rear == nil {
-		fmt.Println("Queue is empty")
-		return -1
+		panic("Queue is empty")
 	}
 
 	temp := q.front
@@ -54,24 +53,10 @@ func (q *ListQueue) Dequeue() int {
 	return temp.data
 }
 
-func (q *ListQueue) Display() {
+func (q *ListQueue[T]) Display() {
 	temp := q.front
 
 	for temp != nil {
-		fmt.Printf("%d\t", temp.data)
+		fmt.Printf("%v\t", temp.data)
 	}
-}
-
-func listQueue() {
-	q := new(Queue)
-
-	q.Enqueue(10)
-
-	q.Enqueue(20)
-
-	q.Enqueue(500)
-
-	q.Dequeue()
-
-	q.Display()
 }

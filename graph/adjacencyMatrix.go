@@ -1,42 +1,40 @@
-//go:build exclude
-
 package graph
 
 import "fmt"
 
 // Graph Space Complexity: O(n*n) Due to the use of 2D matrix
 
-type Graph struct {
+type MatrixGraph struct {
 	adjMatrix [][]bool
 	vertices  int
 }
 
-func (graph *Graph) Init(vertices int) {
-	graph.vertices = vertices
+func (g *MatrixGraph) Init(vertices int) {
+	g.vertices = vertices
 
-	graph.adjMatrix = make([][]bool, vertices)
+	g.adjMatrix = make([][]bool, vertices)
 
 	for i := 0; i < vertices; i++ {
-		graph.adjMatrix[i] = make([]bool, vertices)
+		g.adjMatrix[i] = make([]bool, vertices)
 	}
 
 }
 
 // AddEdge Time Complexity: O(1)
-func (graph *Graph) AddEdge(i, j int) {
-	graph.adjMatrix[i][j] = true
-	graph.adjMatrix[j][i] = true
+func (g *MatrixGraph) AddEdge(i, j int) {
+	g.adjMatrix[i][j] = true
+	g.adjMatrix[j][i] = true
 }
 
 // RemoveEdge Time Complexity: O(1)
-func (graph *Graph) RemoveEdge(i, j int) {
-	graph.adjMatrix[i][j] = false
-	graph.adjMatrix[j][i] = false
+func (g *MatrixGraph) RemoveEdge(i, j int) {
+	g.adjMatrix[i][j] = false
+	g.adjMatrix[j][i] = false
 }
 
 // AdjacentNodes Time Complexity: O(n)
-func (graph *Graph) AdjacentNodes(i int) {
-	for vertex, isConnected := range graph.adjMatrix[i] {
+func (g *MatrixGraph) AdjacentNodes(i int) {
+	for vertex, isConnected := range g.adjMatrix[i] {
 		if isConnected {
 			fmt.Printf("%d\t", vertex)
 		}
@@ -44,45 +42,23 @@ func (graph *Graph) AdjacentNodes(i int) {
 }
 
 // CheckIfConnected Time Complexity: O(1)
-func (graph *Graph) CheckIfConnected(i, j int) bool {
-	if graph.adjMatrix[i][j] {
+func (g *MatrixGraph) CheckIfConnected(i, j int) bool {
+	if g.adjMatrix[i][j] {
 		fmt.Printf("\n%d and %d are connected\n", i, j)
 	} else {
 		fmt.Printf("\n%d and %d are not connected\n", i, j)
 	}
 
-	return graph.adjMatrix[i][j]
+	return g.adjMatrix[i][j]
 }
 
-func (graph *Graph) Display() {
-	for i := 0; i < graph.vertices; i++ {
+func (g *MatrixGraph) Display() {
+	for i := 0; i < g.vertices; i++ {
 		fmt.Printf("%d : ", i)
-		for j := 0; j < graph.vertices; j++ {
-			fmt.Printf("%t ", graph.adjMatrix[i][j])
+		for j := 0; j < g.vertices; j++ {
+			fmt.Printf("%t ", g.adjMatrix[i][j])
 		}
 
 		fmt.Println()
 	}
-}
-
-func adjacencyMatrix() {
-	graph := new(Graph)
-
-	graph.Init(4)
-
-	graph.AddEdge(1, 2)
-
-	graph.AddEdge(0, 3)
-
-	graph.AddEdge(1, 3)
-
-	graph.AddEdge(0, 2)
-
-	graph.RemoveEdge(2, 1)
-
-	graph.Display()
-
-	graph.CheckIfConnected(0, 3)
-
-	graph.AdjacentNodes(0)
 }

@@ -1,9 +1,6 @@
 package main
 
-import (
-	"DSA-Go/graph"
-	// "DSA-Go/stack"
-)
+import "DSA-Go/graph"
 
 func main() {
 	// stack.Run()
@@ -25,4 +22,8 @@ func main() {
 	// hashtable.Run()
 
 	// greedyalgorithms.Run()
+
+	// sorting.Run()
+
+	// binarysearch.Run()
 }

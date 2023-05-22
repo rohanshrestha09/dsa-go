@@ -56,6 +56,6 @@ func Run() {
 
 	// s.Display()
 
-	fmt.Printf("\n%s", infixToPostfix("A+(B*C-(D/E$F)*G)*H"))
+	fmt.Printf("\n%s", infixToPostfix("(a*(b-c/(d*e-f)*g))^h"))
 
 }

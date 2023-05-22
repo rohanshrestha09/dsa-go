@@ -12,4 +12,6 @@ func Run() {
 
 	fmt.Println("\nTower of Hanoi")
 	TOH(4, 'S', 'A', 'D')
+
+	fmt.Println("Sum :", sum([]int{2, 3, 6}))
 }

@@ -1,20 +1,16 @@
 package stack
 
+import "regexp"
+
 func checkOPPrecedence(operator rune) int {
 	switch operator {
-	case '^':
-		fallthrough
-	case '$':
+	case '^', '$':
 		return 3
 
-	case '*':
-		fallthrough
-	case '/':
+	case '*', '/':
 		return 2
 
-	case '+':
-		fallthrough
-	case '-':
+	case '+', '-':
 		return 1
 	}
 
@@ -26,6 +22,8 @@ func infixToPostfix(infix string) string {
 	s := new(Stack)
 
 	var postfix string
+
+	re := regexp.MustCompile("^[a-zA-Z0-9]*$")
 
 	for _, value := range infix {
 		switch {
@@ -45,7 +43,7 @@ func infixToPostfix(infix string) string {
 				postfix = postfix + string(item)
 			}
 
-		case value >= 65 && value <= 90 || value >= 97 && value <= 122:
+		case re.MatchString(string(value)):
 			postfix = postfix + string(value)
 
 		default:

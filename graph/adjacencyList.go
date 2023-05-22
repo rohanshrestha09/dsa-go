@@ -12,42 +12,42 @@ type Graph struct {
 	vertices int
 }
 
-func (graph *Graph) Init(vertices int) {
-	graph.vertices = vertices
+func (g *Graph) Init(vertices int) {
+	g.vertices = vertices
 
-	graph.adjList = make([]*Node, vertices)
+	g.adjList = make([]*Node, vertices)
 }
 
-func (graph *Graph) AddEdge(s, d int) {
+func (g *Graph) AddEdge(s, d int) {
 	newNode := &Node{d, nil}
 
-	newNode.link = graph.adjList[s]
+	newNode.link = g.adjList[s]
 
-	graph.adjList[s] = newNode
+	g.adjList[s] = newNode
 
-	if graph.adjList[d] == nil {
-		graph.AddEdge(d, s)
+	if g.adjList[d] == nil {
+		g.AddEdge(d, s)
 	}
 }
 
-func (graph *Graph) RemoveEdge(s, d int) {
-	if graph.adjList[s] == nil {
+func (g *Graph) RemoveEdge(s, d int) {
+	if g.adjList[s] == nil {
 		return
 	}
 
-	if graph.adjList[s].vertex == d {
-		graph.adjList[s] = graph.adjList[s].link
-		graph.RemoveEdge(d, s)
+	if g.adjList[s].vertex == d {
+		g.adjList[s] = g.adjList[s].link
+		g.RemoveEdge(d, s)
 		return
 	}
 
-	sourceVertex := graph.adjList[s]
+	sourceVertex := g.adjList[s]
 
 	for sourceVertex.link != nil {
 		if sourceVertex.link.vertex == d {
 			sourceVertex.link = sourceVertex.link.link
 
-			graph.RemoveEdge(d, s)
+			g.RemoveEdge(d, s)
 
 			return
 		}
@@ -55,8 +55,8 @@ func (graph *Graph) RemoveEdge(s, d int) {
 	}
 }
 
-func (graph *Graph) AdjacentNodes(s byte) {
-	sourceVertex := graph.adjList[s]
+func (g *Graph) AdjacentNodes(s byte) {
+	sourceVertex := g.adjList[s]
 
 	fmt.Printf("Adjacent nodes of %d: ", s)
 	for sourceVertex != nil {
@@ -66,29 +66,11 @@ func (graph *Graph) AdjacentNodes(s byte) {
 	}
 }
 
-func (graph *Graph) Display() {
-	for i := 0; i < graph.vertices; i++ {
+func (g *Graph) Display() {
+	for i := 0; i < g.vertices; i++ {
 		fmt.Printf("\n%d: ", i)
-		for sourceVertex := graph.adjList[i]; sourceVertex != nil; sourceVertex = sourceVertex.link {
+		for sourceVertex := g.adjList[i]; sourceVertex != nil; sourceVertex = sourceVertex.link {
 			fmt.Printf("%v\t", sourceVertex.vertex)
 		}
 	}
-}
-
-func adjacencyList() {
-	graph := new(Graph)
-
-	graph.Init(4)
-
-	graph.AddEdge(0, 3)
-
-	graph.AddEdge(0, 1)
-
-	graph.AddEdge(1, 2)
-
-	graph.AdjacentNodes(0)
-
-	graph.RemoveEdge(3, 0)
-
-	graph.Display()
 }

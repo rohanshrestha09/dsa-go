@@ -87,22 +87,24 @@ func (tree *BinaryTree) LevelOrder() {
 
 }
 
-func (tree *BinaryTree) Insert(newNode *Node) *Node {
+func (tree *BinaryTree) Insert(data byte) *Node {
+	newNode := &Node{data: data}
+
 	switch {
 	case tree.root == nil:
 		tree.root = newNode
 
 		return tree.root
 
-	case newNode.data > tree.root.data:
+	case newNode.data > tree.root.data || newNode.data == tree.root.data:
 		rightSubTree := &BinaryTree{root: tree.root.right}
 
-		tree.root.right = rightSubTree.Insert(newNode)
+		tree.root.right = rightSubTree.Insert(data)
 
 	case newNode.data < tree.root.data:
 		leftSubTree := &BinaryTree{root: tree.root.left}
 
-		tree.root.left = leftSubTree.Insert(newNode)
+		tree.root.left = leftSubTree.Insert(data)
 	}
 
 	return tree.root
@@ -163,6 +165,68 @@ func (tree *BinaryTree) Delete(data byte) *Node {
 	return tree.root
 }
 
+func (tree *BinaryTree) IsFullBinaryTree() bool {
+	switch {
+	case tree.root == nil:
+		return true
+
+	case tree.root.left == nil && tree.root.right == nil:
+		return true
+
+	case tree.root.left != nil && tree.root.right != nil:
+		rightSubTree := &BinaryTree{root: tree.root.right}
+
+		leftSubTree := &BinaryTree{root: tree.root.right}
+
+		return leftSubTree.IsFullBinaryTree() && rightSubTree.IsFullBinaryTree()
+
+	default:
+		return false
+	}
+}
+
+func (tree *BinaryTree) IsPerfectBinaryTree(level int) bool {
+	if tree.root == nil {
+		return true
+	}
+
+	if tree.root.left == nil && tree.root.right == nil {
+		return tree.Depth() == level+1
+	}
+
+	if tree.root.left == nil || tree.root.right == nil {
+		return false
+	}
+
+	leftSubTree := &BinaryTree{root: tree.root.left}
+
+	rightSubTree := &BinaryTree{root: tree.root.right}
+
+	return leftSubTree.IsPerfectBinaryTree(level+1) && rightSubTree.IsPerfectBinaryTree(level+1)
+}
+
+func (tree *BinaryTree) IsBalancedBinaryTree() bool {
+	return tree.root == nil
+}
+
+func (tree *BinaryTree) Depth() int {
+	if tree.root == nil {
+		return 0
+	}
+
+	/* compute the depth of each subtree */
+	lDepth := (&BinaryTree{root: tree.root.left}).Depth()
+
+	rDepth := (&BinaryTree{root: tree.root.right}).Depth()
+
+	/* use the larger one */
+	if lDepth > rDepth {
+		return (lDepth + 1)
+	}
+
+	return rDepth + 1
+}
+
 func (tree *BinaryTree) Search(data byte) {
 	switch {
 
@@ -184,32 +248,36 @@ func (tree *BinaryTree) Search(data byte) {
 	}
 }
 
-func binaryTree() {
-
-	binaryTree := &BinaryTree{}
+func Test() {
+	tree := new(BinaryTree)
 
 	for _, val := range []byte{24, 20, 27, 22, 21, 30, 38, 35, 40, 18, 32, 33} {
-		binaryTree.Insert(&Node{data: val})
+		tree.Insert(val)
 	}
 
 	fmt.Print("\n\nPre Order Traversal: ")
-	binaryTree.PreOrder()
+	tree.PreOrder()
 
 	fmt.Print("\n\nIn Order Traversal: ")
-	binaryTree.InOrder()
+	tree.InOrder()
 
 	fmt.Print("\n\nPost Order Traversal: ")
-	binaryTree.PostOrder()
+	tree.PostOrder()
 
 	fmt.Print("\n\nLevel Order Traversal: ")
-	binaryTree.LevelOrder()
+	tree.LevelOrder()
 
-	binaryTree.Delete(24)
+	tree.Delete(24)
 
 	fmt.Print("\n\nAfter deleting 24 (Pre Order): ")
-	binaryTree.PreOrder()
+	tree.PreOrder()
 
 	fmt.Println()
-	binaryTree.Search(40)
+	tree.Search(40)
 
+	fmt.Println(tree.IsFullBinaryTree())
+
+	fmt.Println(tree.Depth())
+
+	fmt.Println(tree.IsPerfectBinaryTree(0))
 }

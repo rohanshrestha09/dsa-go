@@ -1,13 +1,13 @@
 package graph
 
 import (
-	queue "DSA-Go/queue"
+	"DSA-Go/queue"
 	"fmt"
 )
 
 func (g *Graph) BFS(initialVertex int) {
 
-	queue := new(queue.ListQueue)
+	queue := new(queue.ListQueue[int])
 
 	visited := make([]bool, g.vertices)
 
@@ -35,23 +35,5 @@ func (g *Graph) BFS(initialVertex int) {
 		}
 
 	}
-
-}
-
-func bfs() {
-
-	g := new(Graph)
-
-	g.Init(5)
-
-	g.AddEdge(0, 3)
-
-	g.AddEdge(0, 2)
-
-	g.AddEdge(0, 1)
-
-	g.AddEdge(2, 4)
-
-	g.BFS(0)
 
 }
