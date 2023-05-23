@@ -2,43 +2,62 @@ package graph
 
 import "fmt"
 
-type Node struct {
-	vertex int
-	link   *Node
+type GraphType int
+
+const (
+	DIRECTED GraphType = iota
+	UNDIRECTED
+)
+
+type Node[T string | int] struct {
+	vertex T
+	link   *Node[T]
 }
 
-type Graph struct {
-	adjList  []*Node
-	vertices int
+type Graph[T string | int] struct {
+	adjList   map[T]*Node[T]
+	vertices  int
+	graphType GraphType
 }
 
-func (g *Graph) Init(vertices int) {
+func (g *Graph[T]) Init(vertices int, graphType GraphType) {
 	g.vertices = vertices
 
-	g.adjList = make([]*Node, vertices)
+	g.adjList = make(map[T]*Node[T], vertices)
+
+	g.graphType = graphType
 }
 
-func (g *Graph) AddEdge(s, d int) {
-	newNode := &Node{d, nil}
+func (g *Graph[T]) AddEdge(s, d T) {
+
+	newNode := &Node[T]{d, nil}
 
 	newNode.link = g.adjList[s]
 
 	g.adjList[s] = newNode
+
+	if g.graphType == DIRECTED {
+		return
+	}
 
 	if g.adjList[d] == nil {
 		g.AddEdge(d, s)
 	}
 }
 
-func (g *Graph) RemoveEdge(s, d int) {
+func (g *Graph[T]) RemoveEdge(s, d T) {
 	if g.adjList[s] == nil {
 		return
 	}
 
 	if g.adjList[s].vertex == d {
 		g.adjList[s] = g.adjList[s].link
+
+		if g.graphType == DIRECTED {
+			return
+		}
+
 		g.RemoveEdge(d, s)
-		return
 	}
 
 	sourceVertex := g.adjList[s]
@@ -47,18 +66,21 @@ func (g *Graph) RemoveEdge(s, d int) {
 		if sourceVertex.link.vertex == d {
 			sourceVertex.link = sourceVertex.link.link
 
-			g.RemoveEdge(d, s)
+			if g.graphType == DIRECTED {
+				return
+			}
 
-			return
+			g.RemoveEdge(d, s)
 		}
+
 		sourceVertex = sourceVertex.link
 	}
 }
 
-func (g *Graph) AdjacentNodes(s byte) {
+func (g *Graph[T]) AdjacentNodes(s T) {
 	sourceVertex := g.adjList[s]
 
-	fmt.Printf("Adjacent nodes of %d: ", s)
+	fmt.Printf("Adjacent nodes of %v: ", s)
 	for sourceVertex != nil {
 		fmt.Printf("%v\t", sourceVertex.vertex)
 
@@ -66,10 +88,10 @@ func (g *Graph) AdjacentNodes(s byte) {
 	}
 }
 
-func (g *Graph) Display() {
-	for i := 0; i < g.vertices; i++ {
-		fmt.Printf("\n%d: ", i)
-		for sourceVertex := g.adjList[i]; sourceVertex != nil; sourceVertex = sourceVertex.link {
+func (g *Graph[T]) Display() {
+	for k := range g.adjList {
+		fmt.Printf("\n%v: ", k)
+		for sourceVertex := g.adjList[k]; sourceVertex != nil; sourceVertex = sourceVertex.link {
 			fmt.Printf("%v\t", sourceVertex.vertex)
 		}
 	}

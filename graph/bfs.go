@@ -5,11 +5,11 @@ import (
 	"fmt"
 )
 
-func (g *Graph) BFS(initialVertex int) {
+func (g *Graph[T]) BFS(initialVertex T) {
 
-	queue := new(queue.ListQueue[int])
+	queue := new(queue.ListQueue[T])
 
-	visited := make([]bool, g.vertices)
+	visited := make(map[T]bool, g.vertices)
 
 	queue.Enqueue(initialVertex)
 
@@ -18,7 +18,7 @@ func (g *Graph) BFS(initialVertex int) {
 	for queue.Length != 0 {
 		currentVertex := queue.Dequeue()
 
-		fmt.Print(currentVertex)
+		fmt.Printf("%v\t", currentVertex)
 
 		temp := g.adjList[currentVertex]
 
@@ -33,7 +33,5 @@ func (g *Graph) BFS(initialVertex int) {
 
 			temp = temp.link
 		}
-
 	}
-
 }

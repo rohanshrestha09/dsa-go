@@ -2,25 +2,42 @@ package graph
 
 import "fmt"
 
+var data = map[string][]string{
+	"Rohan":    {"Shrestha", "John"},
+	"Shrestha": {"Rohan", "James", "Kriti"},
+	"John":     {"Rohan", "Rose"},
+	"James":    {"Shrestha", "Rose"},
+	"Kriti":    {"Shrestha"},
+	"Rose":     {"James", "John"},
+}
+
 func Run() {
 
-	g := new(Graph)
+	g := new(Graph[string])
 
-	g.Init(5)
+	g.Init(6, DIRECTED)
 
-	g.AddEdge(0, 3)
+	for k, v := range data {
+		for _, v := range v {
+			g.AddEdge(k, v)
+		}
+	}
 
-	g.AddEdge(0, 2)
-
-	g.AddEdge(0, 1)
-
-	g.AddEdge(2, 4)
-
-	g.BFS(0)
+	g.BFS("Rohan")
 
 	fmt.Println()
 
-	visited := make([]bool, g.vertices)
+	visited := make(map[string]bool, g.vertices)
 
-	g.DFS(0, visited)
+	g.DFS("Rohan", visited)
+
+	g.RemoveEdge("Kriti", "Shrestha")
+
+	g.RemoveEdge("Rohan", "Shrestha")
+
+	g.Display()
+
+	fmt.Println()
+
+	g.AdjacentNodes("Rose")
 }

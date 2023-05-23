@@ -2,13 +2,13 @@ package graph
 
 import "fmt"
 
-func (g *Graph) DFS(initialVertex int, visited []bool) {
+func (g *Graph[T]) DFS(initialVertex T, visited map[T]bool) {
 
 	if visited[initialVertex] {
 		return
 	}
 
-	fmt.Print(initialVertex)
+	fmt.Printf("%v\t", initialVertex)
 
 	visited[initialVertex] = true
 
