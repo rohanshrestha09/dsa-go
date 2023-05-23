@@ -23,13 +23,13 @@ func Run() {
 		}
 	}
 
-	g.BFS("Rohan")
+	_, path := g.BFS("Rohan")
 
-	fmt.Println()
+	fmt.Println(path)
 
-	visited := make(map[string]bool, g.vertices)
+	fmt.Println(g.ShortestPath("Rohan", "Kriti"))
 
-	g.DFS("Rohan", visited)
+	fmt.Println(g.DFS("Rohan"))
 
 	g.RemoveEdge("Kriti", "Shrestha")
 
