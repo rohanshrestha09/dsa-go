@@ -30,18 +30,14 @@ func (g *Graph[T]) Init(vertices int, graphType GraphType) {
 
 func (g *Graph[T]) AddEdge(s, d T) {
 
-	newNode := &Node[T]{d, nil}
-
-	newNode.link = g.list[s]
+	newNode := &Node[T]{d, g.list[s]}
 
 	g.list[s] = newNode
 
-	if g.graphType == DIRECTED {
-		return
-	}
+	if g.graphType == UNDIRECTED {
+		newNode := &Node[T]{s, g.list[d]}
 
-	if g.list[d] == nil {
-		g.AddEdge(d, s)
+		g.list[d] = newNode
 	}
 }
 
