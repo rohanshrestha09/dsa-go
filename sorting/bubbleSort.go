@@ -1,9 +1,6 @@
 package sorting
 
-import "fmt"
-
-func bubbleSort(data []Song) {
-	fmt.Println("Before:", data)
+func bubbleSort(data []Song) []Song {
 
 	for i := 0; i < len(data)-1; i++ {
 
@@ -26,5 +23,5 @@ func bubbleSort(data []Song) {
 		}
 	}
 
-	fmt.Println("After:", data)
+	return data
 }

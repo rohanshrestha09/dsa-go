@@ -5,10 +5,10 @@ import "fmt"
 var data = map[string][]string{
 	"Rohan":    {"Shrestha", "John"},
 	"Shrestha": {"Rohan", "James", "Kriti"},
-	"John":     {"Rohan", "Rose"},
-	"James":    {"Shrestha", "Rose"},
-	"Kriti":    {"Shrestha"},
-	"Rose":     {"James", "John"},
+	"John":     {"Rohan", "James", "Sam"},
+	"James":    {"Shrestha", "Rose", "John"},
+	"Kriti":    {"Shrestha", "Rose"},
+	"Rose":     {"James", "Kriti", "Sam"},
 }
 
 func Run() {
@@ -27,7 +27,7 @@ func Run() {
 
 	fmt.Println(path)
 
-	fmt.Println(g.ShortestPath("Rohan", "Kriti"))
+	fmt.Println(g.ShortestPath("Rohan", "Sam"))
 
 	fmt.Println(g.DFS("Rohan"))
 

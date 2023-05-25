@@ -19,9 +19,9 @@ var data = []Song{
 func Run() {
 	fmt.Println(quickSort([]int{1, 4, 5, 10, 100, 99, 4, 5, 2000}))
 
-	bubbleSort(data)
+	fmt.Println(bubbleSort(data))
 
-	selectionSort(data)
+	fmt.Println(selectionSort(data))
 
-	insertionSort(data)
+	fmt.Println(insertionSort(data))
 }

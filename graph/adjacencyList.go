@@ -15,7 +15,7 @@ type Node[T string | int] struct {
 }
 
 type Graph[T string | int] struct {
-	adjList   map[T]*Node[T]
+	list      map[T]*Node[T]
 	vertices  int
 	graphType GraphType
 }
@@ -23,7 +23,7 @@ type Graph[T string | int] struct {
 func (g *Graph[T]) Init(vertices int, graphType GraphType) {
 	g.vertices = vertices
 
-	g.adjList = make(map[T]*Node[T], vertices)
+	g.list = make(map[T]*Node[T], vertices)
 
 	g.graphType = graphType
 }
@@ -32,26 +32,26 @@ func (g *Graph[T]) AddEdge(s, d T) {
 
 	newNode := &Node[T]{d, nil}
 
-	newNode.link = g.adjList[s]
+	newNode.link = g.list[s]
 
-	g.adjList[s] = newNode
+	g.list[s] = newNode
 
 	if g.graphType == DIRECTED {
 		return
 	}
 
-	if g.adjList[d] == nil {
+	if g.list[d] == nil {
 		g.AddEdge(d, s)
 	}
 }
 
 func (g *Graph[T]) RemoveEdge(s, d T) {
-	if g.adjList[s] == nil {
+	if g.list[s] == nil {
 		return
 	}
 
-	if g.adjList[s].vertex == d {
-		g.adjList[s] = g.adjList[s].link
+	if g.list[s].vertex == d {
+		g.list[s] = g.list[s].link
 
 		if g.graphType == DIRECTED {
 			return
@@ -60,7 +60,7 @@ func (g *Graph[T]) RemoveEdge(s, d T) {
 		g.RemoveEdge(d, s)
 	}
 
-	sourceVertex := g.adjList[s]
+	sourceVertex := g.list[s]
 
 	for sourceVertex.link != nil {
 		if sourceVertex.link.vertex == d {
@@ -78,7 +78,7 @@ func (g *Graph[T]) RemoveEdge(s, d T) {
 }
 
 func (g *Graph[T]) AdjacentNodes(s T) {
-	sourceVertex := g.adjList[s]
+	sourceVertex := g.list[s]
 
 	fmt.Printf("Adjacent nodes of %v: ", s)
 	for sourceVertex != nil {
@@ -89,9 +89,9 @@ func (g *Graph[T]) AdjacentNodes(s T) {
 }
 
 func (g *Graph[T]) Display() {
-	for k := range g.adjList {
+	for k := range g.list {
 		fmt.Printf("\n%v: ", k)
-		for sourceVertex := g.adjList[k]; sourceVertex != nil; sourceVertex = sourceVertex.link {
+		for sourceVertex := g.list[k]; sourceVertex != nil; sourceVertex = sourceVertex.link {
 			fmt.Printf("%v\t", sourceVertex.vertex)
 		}
 	}

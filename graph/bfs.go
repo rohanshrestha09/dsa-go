@@ -14,14 +14,14 @@ func (g *Graph[T]) BFS(start T) (map[T]T, []T) {
 
 	queue.Enqueue(start)
 
-	visited[start] = g.adjList[start].vertex
+	visited[start] = g.list[start].vertex
 
 	for queue.Length != 0 {
 		current := queue.Dequeue()
 
 		path = append(path, current)
 
-		temp := g.adjList[current]
+		temp := g.list[current]
 
 		for temp != nil {
 			adjVertex := temp.vertex

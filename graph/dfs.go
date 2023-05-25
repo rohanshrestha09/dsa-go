@@ -18,7 +18,7 @@ func (g *Graph[T]) DFS(start T) []T {
 
 		visited[vertex] = true
 
-		temp := g.adjList[vertex]
+		temp := g.list[vertex]
 
 		for temp != nil {
 			dfs(temp.vertex)

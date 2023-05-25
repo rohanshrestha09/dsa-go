@@ -1,9 +1,6 @@
 package sorting
 
-import "fmt"
-
-func selectionSort(data []Song) {
-	fmt.Println("Before:", data)
+func selectionSort(data []Song) []Song {
 
 	for i := 0; i < len(data)-1; i++ {
 		for j := i + 1; j < len(data); j++ {
@@ -15,6 +12,5 @@ func selectionSort(data []Song) {
 		}
 	}
 
-	fmt.Println("After:", data)
-
+	return data
 }

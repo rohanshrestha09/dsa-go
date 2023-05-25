@@ -1,10 +1,6 @@
 package sorting
 
-import "fmt"
-
-func insertionSort(data []Song) {
-
-	fmt.Println("Before:", data)
+func insertionSort(data []Song) []Song {
 
 	for i := 1; i < len(data); i++ {
 		k := i
@@ -20,5 +16,5 @@ func insertionSort(data []Song) {
 		}
 	}
 
-	fmt.Println("After:", data)
+	return data
 }
