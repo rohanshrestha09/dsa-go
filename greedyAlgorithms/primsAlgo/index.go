@@ -1,4 +1,4 @@
-package primsalgo
+package primsAlgo
 
 import (
 	"fmt"

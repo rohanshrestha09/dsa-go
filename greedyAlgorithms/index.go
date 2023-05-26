@@ -1,9 +1,13 @@
 package greedyalgorithms
 
-import primsAlgo "DSA-Go/greedyAlgorithms/primsAlgo"
+import (
+	"DSA-Go/greedyAlgorithms/kruskalAlgo"
+)
 
 func Run() {
 	// dijkstraAlgo.Test()
 
-	primsAlgo.Test()
+	// primsAlgo.Test()
+
+	kruskalAlgo.Test()
 }
