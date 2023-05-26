@@ -87,7 +87,7 @@ func (g *Graph[T]) KruskalAlgo() []Path[T] {
 
 	var visited []T
 
-	var list []Path[T]
+	var path []Path[T]
 
 	g.Sort()
 
@@ -99,13 +99,13 @@ func (g *Graph[T]) KruskalAlgo() []Path[T] {
 		intersection := g.FindIntersection(visited, v.node)
 
 		if len(intersection) != 2 {
-			list = append(list, *v)
+			path = append(path, *v)
 		}
 
 		visited = g.FindUnion(visited, v.node)
 	}
 
-	return list
+	return path
 
 }
 
