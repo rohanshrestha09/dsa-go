@@ -1,6 +1,6 @@
 package main
 
-import greedyalgorithms "DSA-Go/greedyAlgorithms"
+import "DSA-Go/tree1"
 
 func main() {
 	// stack.Run()
@@ -15,13 +15,13 @@ func main() {
 
 	// circularLinkedList.Run()
 
-	// tree1.Run()
+	tree1.Run()
 
 	// graph.Run()
 
 	// hashtable.Run()
 
-	greedyalgorithms.Run()
+	// greedyalgorithms.Run()
 
 	// sorting.Run()
 

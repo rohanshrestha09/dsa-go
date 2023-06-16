@@ -1,4 +1,4 @@
-package tree1
+package binarytree
 
 import "fmt"
 
@@ -280,4 +280,8 @@ func Test() {
 	fmt.Println(tree.Depth())
 
 	fmt.Println(tree.IsPerfectBinaryTree(0))
+
+	tree.InvertTree()
+
+	tree.LevelOrder()
 }
