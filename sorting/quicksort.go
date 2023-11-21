@@ -1,7 +1,6 @@
 package sorting
 
-func quickSort(array []int) []int {
-
+func QuickSort(array []int) []int {
 	if len(array) < 2 {
 		return array
 	}
@@ -24,12 +23,11 @@ func quickSort(array []int) []int {
 
 	result := []int{}
 
-	result = append(result, quickSort(rightarray)...)
+	result = append(result, QuickSort(leftarray)...)
 
 	result = append(result, pivot)
 
-	result = append(result, quickSort(leftarray)...)
+	result = append(result, QuickSort(rightarray)...)
 
 	return result
-
 }

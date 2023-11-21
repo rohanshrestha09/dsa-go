@@ -1,10 +1,9 @@
 package sorting
 
-func selectionSort(data []Song) []Song {
-
+func SelectionSort(data []int) []int {
 	for i := 0; i < len(data)-1; i++ {
 		for j := i + 1; j < len(data); j++ {
-			if data[i].TimesPlayed < data[j].TimesPlayed {
+			if data[i] > data[j] {
 				temp := data[i]
 				data[i] = data[j]
 				data[j] = temp
