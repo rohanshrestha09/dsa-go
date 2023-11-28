@@ -1,6 +1,26 @@
 package stack
 
-import "regexp"
+import (
+	"regexp"
+)
+
+type Stack []rune
+
+func (s *Stack) Push(data rune) {
+	*s = append(*s, data)
+}
+
+func (s *Stack) Pop() rune {
+	item := (*s)[len(*s)-1]
+
+	*s = (*s)[:len(*s)-1]
+
+	return item
+}
+
+func (s Stack) TOS() rune {
+	return s[len(s)-1]
+}
 
 func checkOPPrecedence(operator rune) int {
 	switch operator {
@@ -17,9 +37,8 @@ func checkOPPrecedence(operator rune) int {
 	return 0
 }
 
-func infixToPostfix(infix string) string {
-
-	s := new(Stack)
+func InfixToPostfix(infix string) string {
+	var s Stack
 
 	var postfix string
 
@@ -31,10 +50,9 @@ func infixToPostfix(infix string) string {
 			s.Push(value)
 
 		case value == ')':
-			var item rune
 
 			for {
-				item = s.Pop().(rune)
+				item := s.Pop()
 
 				if item == '(' {
 					break
@@ -48,18 +66,17 @@ func infixToPostfix(infix string) string {
 
 		default:
 		precedenceOperation:
-			TOS := (func() int {
-				if s.Length != 0 {
-					return checkOPPrecedence(s.TOS.(rune))
-				}
-				return 0
-			})()
+			TOS := 0
 
-			if s.Length == 0 || checkOPPrecedence(value) > TOS {
+			if len(s) != 0 {
+				TOS = checkOPPrecedence(s.TOS())
+			}
+
+			if len(s) == 0 || checkOPPrecedence(value) > TOS {
 				s.Push(value)
 			} else {
 
-				item := s.Pop().(rune)
+				item := s.Pop()
 
 				postfix = postfix + string(item)
 
@@ -68,8 +85,8 @@ func infixToPostfix(infix string) string {
 		}
 	}
 
-	for s.Length != 0 {
-		postfix = postfix + string(s.Pop().(rune))
+	for len(s) != 0 {
+		postfix = postfix + string(s.Pop())
 	}
 
 	return postfix
