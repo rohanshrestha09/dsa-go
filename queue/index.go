@@ -1,27 +1,15 @@
 package queue
 
-import "fmt"
+type Queue []any
 
-type Queue[T any] struct {
-	array []T
+func (q *Queue) Enqueue(data any) {
+	*q = append(*q, data)
 }
 
-func (queue *Queue[T]) Enqueue(data T) {
-	queue.array = append(queue.array, data)
-}
+func (q *Queue) Dequeue() any {
+	item := (*q)[0]
 
-func (queue *Queue[T]) Dequeue() T {
-	if len(queue.array) == 0 {
-		panic("Queue is empty")
-	}
+	*q = (*q)[1:]
 
-	queue.array = queue.array[1:]
-
-	return queue.array[0]
-}
-
-func (queue *Queue[T]) Display() {
-	for _, val := range queue.array {
-		fmt.Print(val, " ")
-	}
+	return item
 }

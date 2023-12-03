@@ -1,7 +1,7 @@
 package graph
 
 import (
-	"DSA-Go/queue"
+	"github.com/rohanshrestha09/dsa-go/queue"
 )
 
 func (g *Graph[T]) BFS(start T) (map[T]T, []T) {
