@@ -32,11 +32,11 @@ func TestPercolation(t *testing.T) {
 		    1 represents open site and 0 represents closed site
 	*/
 
-	t.Run("should not prelocate", func(t *testing.T) {
-		prelocates := p.Percolates()
+	t.Run("should not percolate", func(t *testing.T) {
+		percolates := p.Percolates()
 
-		if prelocates {
-			t.Errorf("should not prelocate")
+		if percolates {
+			t.Errorf("should not percolate")
 		}
 	})
 
@@ -46,7 +46,7 @@ func TestPercolation(t *testing.T) {
 		result := p.NumberOfOpenSites()
 
 		if result != expected {
-			t.Errorf("expecte %d, got %d", expected, result)
+			t.Errorf("expected %d, got %d", expected, result)
 		}
 	})
 
@@ -64,11 +64,11 @@ func TestPercolation(t *testing.T) {
 		    1 represents open site and 0 represents closed site
 	*/
 
-	t.Run("should prelocate", func(t *testing.T) {
-		prelocates := p.Percolates()
+	t.Run("should percolate", func(t *testing.T) {
+		percolates := p.Percolates()
 
-		if !prelocates {
-			t.Errorf("should prelocate")
+		if !percolates {
+			t.Errorf("should percolate")
 		}
 	})
 }

@@ -23,7 +23,7 @@ func (p *Percolation) Init(n int) {
 	p.uf.Init(n*n + 2)
 }
 
-// opens the site (row, col) if it is not open already
+// Open opens the site (row, col) if it is not open already
 func (p *Percolation) Open(row, col int) {
 	if row < 1 || col < 1 || row > p.len || col > p.len {
 		panic("IllegalArgumentException")
@@ -65,7 +65,7 @@ func (p *Percolation) Open(row, col int) {
 	}
 }
 
-// is the site (row, col) open?
+// IsOpen is the site (row, col) open?
 func (p *Percolation) IsOpen(row, col int) bool {
 	if row < 1 || col < 1 || row > p.len || col > p.len {
 		panic("IllegalArgumentException")
@@ -74,7 +74,7 @@ func (p *Percolation) IsOpen(row, col int) bool {
 	return p.grid[row-1][col-1]
 }
 
-// is the site (row, col) full?
+// IsFull is the site (row, col) full?
 func (p *Percolation) IsFull(row, col int) bool {
 	if row < 1 || col < 1 || row > p.len || col > p.len {
 		panic("IllegalArgumentException")
@@ -83,17 +83,17 @@ func (p *Percolation) IsFull(row, col int) bool {
 	return (p.uf.Root(p.GetIndex(row, col)) == p.uf.Root(p.top))
 }
 
-// returns the number of open sites
+// NumberOfOpenSites returns the number of open sites
 func (p *Percolation) NumberOfOpenSites() int {
 	return p.count
 }
 
-// does the system percolate?
+// Percolates does the system percolate?
 func (p *Percolation) Percolates() bool {
 	return (p.uf.Root(p.top) == p.uf.Root(p.bottom))
 }
 
-// get the index of row,column
+// GetIndex get the index of row,column
 func (p *Percolation) GetIndex(row, col int) int {
 	return p.len*(row-1) + (col)
 }
