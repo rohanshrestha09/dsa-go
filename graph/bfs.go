@@ -1,23 +1,23 @@
 package graph
 
 import (
-	"github.com/rohanshrestha09/dsa-go/queue"
+	q "github.com/rohanshrestha09/dsa-go/queue"
 )
 
 func (g *Graph[T]) BFS(start T) (map[T]T, []T) {
 
 	var path []T
 
-	queue := new(queue.ListQueue[T])
+	dq := new(q.Deque[T])
 
 	visited := make(map[T]T, g.vertices)
 
-	queue.Enqueue(start)
+	dq.Enqueue(start)
 
 	visited[start] = g.list[start].vertex
 
-	for queue.Length != 0 {
-		current := queue.Dequeue()
+	for dq.Size() != 0 {
+		current := dq.Dequeue()
 
 		path = append(path, current)
 
@@ -27,7 +27,7 @@ func (g *Graph[T]) BFS(start T) (map[T]T, []T) {
 			adjVertex := temp.vertex
 
 			if _, ok := visited[adjVertex]; !ok {
-				queue.Enqueue(adjVertex)
+				dq.Enqueue(adjVertex)
 
 				visited[adjVertex] = current
 			}
