@@ -1,7 +1,6 @@
 package unionfind_test
 
 import (
-	"log"
 	"testing"
 
 	qf "github.com/rohanshrestha09/dsa-go/union-find"
@@ -34,10 +33,6 @@ func TestQuickUnionUF(t *testing.T) {
 		expected := 2
 
 		result := qu.Count()
-
-		log.Println([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
-
-		log.Println(qu.ID)
 
 		if result != expected {
 			t.Errorf("expected %d, got %d", expected, result)

@@ -1,8 +1,9 @@
 package unionfind_test
 
 import (
-	qf "github.com/rohanshrestha09/dsa-go/union-find"
 	"testing"
+
+	qf "github.com/rohanshrestha09/dsa-go/union-find"
 )
 
 func TestQuickFindUF(t *testing.T) {
