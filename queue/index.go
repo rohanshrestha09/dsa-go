@@ -1,12 +1,12 @@
 package queue
 
-type Queue []any
+type Queue[T any] []T
 
-func (q *Queue) Enqueue(data any) {
+func (q *Queue[T]) Enqueue(data T) {
 	*q = append(*q, data)
 }
 
-func (q *Queue) Dequeue() any {
+func (q *Queue[T]) Dequeue() T {
 	item := (*q)[0]
 
 	*q = (*q)[1:]

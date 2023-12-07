@@ -1,7 +1,7 @@
 package queue_test
 
 import (
-	"golang.org/x/exp/slices"
+	"slices"
 	"testing"
 
 	q "github.com/rohanshrestha09/dsa-go/queue"
