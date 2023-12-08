@@ -1,25 +1,27 @@
 package tree1
 
-import "fmt"
+import (
+	"golang.org/x/exp/constraints"
+)
 
-type Node struct {
-	data  byte
-	left  *Node
-	right *Node
+type Node[T constraints.Ordered] struct {
+	data  T
+	left  *Node[T]
+	right *Node[T]
 }
 
-type BinaryTree struct {
-	root *Node
+type BinaryTree[T constraints.Ordered] struct {
+	root *Node[T]
 }
 
-func (tree *BinaryTree) InvertTree() *Node {
+func (tree *BinaryTree[T]) InvertTree() *Node[T] {
 	if tree.root == nil {
 		return nil
 	}
 
-	rightSubTree := &BinaryTree{root: tree.root.right}
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
-	leftSubTree := &BinaryTree{root: tree.root.left}
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
 	tree.root.left = rightSubTree.InvertTree()
 
@@ -29,49 +31,49 @@ func (tree *BinaryTree) InvertTree() *Node {
 }
 
 // PreOrder Node-Left-Right
-func (tree *BinaryTree) PreOrder(result []byte) []byte {
+func (tree *BinaryTree[T]) PreOrder(result []T) []T {
 	if tree.root == nil {
 		return result
 	}
 
 	result = append(result, tree.root.data)
 
-	leftSubTree := &BinaryTree{root: tree.root.left}
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
 	result = leftSubTree.PreOrder(result)
 
-	rightSubTree := &BinaryTree{root: tree.root.right}
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
 	result = rightSubTree.PreOrder(result)
 
 	return result
 }
 
 // InOrder Left-Node-Right
-func (tree *BinaryTree) InOrder(result []byte) []byte {
+func (tree *BinaryTree[T]) InOrder(result []T) []T {
 	if tree.root == nil {
 		return result
 	}
 
-	leftSubTree := &BinaryTree{root: tree.root.left}
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
 	result = leftSubTree.InOrder(result)
 
 	result = append(result, tree.root.data)
 
-	rightSubTree := &BinaryTree{root: tree.root.right}
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
 	result = rightSubTree.InOrder(result)
 
 	return result
 }
 
 // PostOrder Left-Right-Node
-func (tree *BinaryTree) PostOrder(result []byte) []byte {
+func (tree *BinaryTree[T]) PostOrder(result []T) []T {
 	if tree.root == nil {
 		return result
 	}
 
-	leftSubTree := &BinaryTree{root: tree.root.left}
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
 	result = leftSubTree.PostOrder(result)
 
-	rightSubTree := &BinaryTree{root: tree.root.right}
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
 	result = rightSubTree.PostOrder(result)
 
 	result = append(result, tree.root.data)
@@ -79,14 +81,14 @@ func (tree *BinaryTree) PostOrder(result []byte) []byte {
 	return result
 }
 
-func (tree *BinaryTree) LevelOrder() []byte {
+func (tree *BinaryTree[T]) LevelOrder() []T {
+	var result []T
+
 	if tree.root == nil {
-		return []byte{}
+		return result
 	}
 
-	queue := []*Node{tree.root}
-
-	var result []byte
+	queue := []*Node[T]{tree.root}
 
 	for len(queue) != 0 {
 		curr := queue[0]
@@ -108,8 +110,8 @@ func (tree *BinaryTree) LevelOrder() []byte {
 	return result
 }
 
-func (tree *BinaryTree) Insert(data byte) *Node {
-	newNode := &Node{data: data}
+func (tree *BinaryTree[T]) Insert(data T) *Node[T] {
+	newNode := &Node[T]{data: data}
 
 	switch {
 	case tree.root == nil:
@@ -118,12 +120,12 @@ func (tree *BinaryTree) Insert(data byte) *Node {
 		return tree.root
 
 	case newNode.data > tree.root.data || newNode.data == tree.root.data:
-		rightSubTree := &BinaryTree{root: tree.root.right}
+		rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
 		tree.root.right = rightSubTree.Insert(data)
 
 	case newNode.data < tree.root.data:
-		leftSubTree := &BinaryTree{root: tree.root.left}
+		leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
 		tree.root.left = leftSubTree.Insert(data)
 	}
@@ -132,7 +134,7 @@ func (tree *BinaryTree) Insert(data byte) *Node {
 
 }
 
-func (tree *BinaryTree) Delete(data byte) *Node {
+func (tree *BinaryTree[T]) Delete(data T) *Node[T] {
 	switch {
 	case tree.root.data == data:
 
@@ -155,7 +157,7 @@ func (tree *BinaryTree) Delete(data byte) *Node {
 
 			tree.root.data = temp.data
 
-			rightSubTree := &BinaryTree{root: tree.root.right}
+			rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
 			tree.root.right = rightSubTree.Delete(temp.data)
 
@@ -173,12 +175,12 @@ func (tree *BinaryTree) Delete(data byte) *Node {
 		return tree.root
 
 	case data > tree.root.data:
-		rightSubTree := &BinaryTree{root: tree.root.right}
+		rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
 		tree.root.right = rightSubTree.Delete(data)
 
 	case data < tree.root.data:
-		leftSubTree := &BinaryTree{root: tree.root.left}
+		leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
 		tree.root.left = leftSubTree.Delete(data)
 	}
@@ -186,7 +188,7 @@ func (tree *BinaryTree) Delete(data byte) *Node {
 	return tree.root
 }
 
-func (tree *BinaryTree) IsFullBinaryTree() bool {
+func (tree *BinaryTree[T]) IsFull() bool {
 	switch {
 	case tree.root == nil:
 		return true
@@ -195,52 +197,50 @@ func (tree *BinaryTree) IsFullBinaryTree() bool {
 		return true
 
 	case tree.root.left != nil && tree.root.right != nil:
-		rightSubTree := &BinaryTree{root: tree.root.right}
+		rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
-		leftSubTree := &BinaryTree{root: tree.root.right}
+		leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
-		return leftSubTree.IsFullBinaryTree() && rightSubTree.IsFullBinaryTree()
+		return leftSubTree.IsFull() && rightSubTree.IsFull()
 
 	default:
 		return false
 	}
 }
 
-func (tree *BinaryTree) IsPerfectBinaryTree(level int) bool {
+func (tree *BinaryTree[T]) IsPerfect(depth, level int) bool {
 	if tree.root == nil {
 		return true
 	}
 
 	if tree.root.left == nil && tree.root.right == nil {
-		return tree.Depth() == level+1
+		return depth == level
 	}
 
 	if tree.root.left == nil || tree.root.right == nil {
 		return false
 	}
 
-	leftSubTree := &BinaryTree{root: tree.root.left}
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
-	rightSubTree := &BinaryTree{root: tree.root.right}
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
-	return leftSubTree.IsPerfectBinaryTree(level+1) && rightSubTree.IsPerfectBinaryTree(level+1)
+	return leftSubTree.IsPerfect(depth, level+1) && rightSubTree.IsPerfect(depth, level+1)
 }
 
-func (tree *BinaryTree) IsBalancedBinaryTree() bool {
+func (tree *BinaryTree[T]) IsBalanced() bool {
 	return tree.root == nil
 }
 
-func (tree *BinaryTree) Depth() int {
+func (tree *BinaryTree[T]) Depth() int {
 	if tree.root == nil {
 		return -1
 	}
 
-	/* compute the depth of each subtree */
-	lDepth := (&BinaryTree{root: tree.root.left}).Depth()
+	lDepth := (&BinaryTree[T]{root: tree.root.left}).Depth()
 
-	rDepth := (&BinaryTree{root: tree.root.right}).Depth()
+	rDepth := (&BinaryTree[T]{root: tree.root.right}).Depth()
 
-	/* use the larger one */
 	if lDepth > rDepth {
 		return (lDepth + 1)
 	}
@@ -248,7 +248,7 @@ func (tree *BinaryTree) Depth() int {
 	return rDepth + 1
 }
 
-func (tree *BinaryTree) Search(data byte) bool {
+func (tree *BinaryTree[T]) Search(data T) bool {
 	switch {
 	case tree.root == nil:
 		return false
@@ -257,34 +257,16 @@ func (tree *BinaryTree) Search(data byte) bool {
 		return true
 
 	case data > tree.root.data:
-		rightSubTree := &BinaryTree{root: tree.root.right}
+		rightSubTree := &BinaryTree[T]{root: tree.root.right}
 
 		return rightSubTree.Search(data)
 
 	case data < tree.root.data:
-		leftSubTree := &BinaryTree{root: tree.root.left}
+		leftSubTree := &BinaryTree[T]{root: tree.root.left}
 
 		return leftSubTree.Search(data)
 
 	default:
 		return false
 	}
-}
-
-func Test() {
-	tree := new(BinaryTree)
-
-	for _, val := range []byte{24, 20, 27, 22, 21, 30, 38, 35, 40, 18, 32, 33} {
-		tree.Insert(val)
-	}
-
-	tree.Delete(24)
-
-	fmt.Println(tree.Depth())
-
-	fmt.Println(tree.IsPerfectBinaryTree(0))
-
-	tree.InvertTree()
-
-	tree.LevelOrder()
 }

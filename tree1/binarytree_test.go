@@ -1,24 +1,25 @@
 package tree1_test
 
 import (
-	"reflect"
+	"math/rand"
+	"slices"
 	"testing"
 
 	t1 "github.com/rohanshrestha09/dsa-go/tree1"
 )
 
 func TestBinaryTree(t *testing.T) {
-	bt := new(t1.BinaryTree)
+	bt := new(t1.BinaryTree[int])
 
-	data := []byte{24, 20, 27, 22, 21, 30, 38, 35, 40, 18, 32, 33}
+	data := []int{24, 20, 27, 22, 21, 30, 18, 36, 25, 28, 23, 26, 17, 24, 19}
 
-	levelOrder := []byte{24, 20, 27, 18, 22, 30, 21, 38, 35, 40, 32, 33}
+	levelOrder := []int{24, 20, 27, 18, 22, 25, 30, 17, 19, 21, 23, 24, 26, 28, 36}
 
-	preOrder := []byte{24, 20, 18, 22, 21, 27, 30, 38, 35, 32, 33, 40}
+	preOrder := []int{24, 20, 18, 17, 19, 22, 21, 23, 27, 25, 24, 26, 30, 28, 36}
 
-	inOrder := []byte{18, 20, 21, 22, 24, 27, 30, 32, 33, 35, 38, 40}
+	inOrder := []int{17, 18, 19, 20, 21, 22, 23, 24, 24, 25, 26, 27, 28, 30, 36}
 
-	postOrder := []byte{18, 21, 22, 20, 33, 32, 35, 40, 38, 30, 27, 24}
+	postOrder := []int{17, 19, 18, 21, 23, 22, 20, 24, 26, 25, 28, 36, 30, 27, 24}
 
 	for _, val := range data {
 		bt.Insert(val)
@@ -27,37 +28,37 @@ func TestBinaryTree(t *testing.T) {
 	t.Run("test level order", func(t *testing.T) {
 		result := bt.LevelOrder()
 
-		if !reflect.DeepEqual(result, levelOrder) {
+		if !slices.Equal(result, levelOrder) {
 			t.Errorf("have %v, want %v", result, levelOrder)
 		}
 	})
 
 	t.Run("test pre order", func(t *testing.T) {
-		result := bt.PreOrder([]byte{})
+		result := bt.PreOrder([]int{})
 
-		if !reflect.DeepEqual(result, preOrder) {
+		if !slices.Equal(result, preOrder) {
 			t.Errorf("have %v, want %v", result, preOrder)
 		}
 	})
 
 	t.Run("test in order", func(t *testing.T) {
-		result := bt.InOrder([]byte{})
+		result := bt.InOrder([]int{})
 
-		if !reflect.DeepEqual(result, inOrder) {
+		if !slices.Equal(result, inOrder) {
 			t.Errorf("have %v, want %v", result, inOrder)
 		}
 	})
 
 	t.Run("test post order", func(t *testing.T) {
-		result := bt.PostOrder([]byte{})
+		result := bt.PostOrder([]int{})
 
-		if !reflect.DeepEqual(result, postOrder) {
+		if !slices.Equal(result, postOrder) {
 			t.Errorf("have %v, want %v", result, postOrder)
 		}
 	})
 
 	t.Run("search element in tree", func(t *testing.T) {
-		var searchElement byte = 40
+		searchElement := data[rand.Intn(len(data))]
 
 		found := bt.Search(searchElement)
 
@@ -67,7 +68,7 @@ func TestBinaryTree(t *testing.T) {
 	})
 
 	t.Run("check depth of the tree", func(t *testing.T) {
-		want := 5
+		want := 3
 
 		depth := bt.Depth()
 
@@ -76,15 +77,19 @@ func TestBinaryTree(t *testing.T) {
 		}
 	})
 
-	bt.Insert(25)
-
-	bt.Insert(28)
-
 	t.Run("check if full binary tree", func(t *testing.T) {
-		isFullBinaryTree := bt.IsFullBinaryTree()
+		isFullBinaryTree := bt.IsFull()
 
 		if !isFullBinaryTree {
 			t.Errorf("Must be full binary tree")
+		}
+	})
+
+	t.Run("check if perfect binary tree", func(t *testing.T) {
+		isPerfectBinaryTree := bt.IsPerfect(bt.Depth(), 0)
+
+		if !isPerfectBinaryTree {
+			t.Errorf("Must be perfect binary tree")
 		}
 	})
 }
