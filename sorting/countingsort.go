@@ -7,7 +7,7 @@ import (
 func CountingSort(data []int) []int {
 	max := slices.Max(data)
 
-	count := make(map[int]int)
+	count := make([]int, max+1)
 
 	result := make([]int, len(data))
 
