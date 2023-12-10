@@ -92,4 +92,12 @@ func TestBinaryTree(t *testing.T) {
 			t.Errorf("Must be perfect binary tree")
 		}
 	})
+
+	t.Run("check if balanced binary tree", func(t *testing.T) {
+		isBalancedBinaryTree := bt.IsBalanced()
+
+		if !isBalancedBinaryTree {
+			t.Errorf("Must be balanced binary tree")
+		}
+	})
 }

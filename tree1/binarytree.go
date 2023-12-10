@@ -1,6 +1,8 @@
 package tree1
 
 import (
+	"math"
+
 	"golang.org/x/exp/constraints"
 )
 
@@ -229,7 +231,27 @@ func (tree *BinaryTree[T]) IsPerfect(depth, level int) bool {
 }
 
 func (tree *BinaryTree[T]) IsBalanced() bool {
-	return tree.root == nil
+	if tree.root == nil {
+		return true
+	}
+
+	leftSubTree := &BinaryTree[T]{root: tree.root.left}
+
+	rightSubTree := &BinaryTree[T]{root: tree.root.right}
+
+	lHeight := float64(leftSubTree.Depth())
+
+	rHeight := float64(rightSubTree.Depth())
+
+	if math.Abs(lHeight-rHeight) >= 2 {
+		return false
+	}
+
+	l := leftSubTree.IsBalanced()
+
+	r := rightSubTree.IsBalanced()
+
+	return l && r
 }
 
 func (tree *BinaryTree[T]) Depth() int {
