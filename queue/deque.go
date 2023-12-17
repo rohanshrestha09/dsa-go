@@ -93,12 +93,6 @@ func (dq *Deque[T]) RemoveFirst() T {
 
 	dq.head.prev = dq.tail
 
-	if dq.head == dq.tail {
-		dq.tail.next = nil
-	} else {
-		dq.tail.next = dq.head
-	}
-
 	temp.next, temp.prev = nil, nil
 
 	dq.size--
@@ -122,12 +116,6 @@ func (dq *Deque[T]) RemoveLast() T {
 	temp := dq.tail
 
 	dq.tail = dq.tail.prev
-
-	if dq.head == dq.tail {
-		dq.tail.next = nil
-	} else {
-		dq.tail.next = dq.head
-	}
 
 	temp.prev, temp.next = nil, nil
 
